@@ -36,14 +36,15 @@ genre.textContent = 'драма';
 
 // Третье задание
 // promoBg.style.cssText = `
-//     background: url('../img/bg.jpg') center center/100% 100% no-repeat;
+//     background: url('img/bg.jpg') center center/100% 100% no-repeat;
 // `;
-promoBg.style.backgroundImage = "url('../img/bg.jpg')";
+promoBg.style.backgroundImage = "url('/img/bg.jpg')";
 
 // Четвертое и пятое задание
 const listOfFilms = document.querySelector('.promo__interactive-list');
 const itemsOfFilms = listOfFilms.querySelectorAll('.promo__interactive-item');
 const filmsSort = movieDB.movies.sort();
+
 // listOfFilms.innerHTML = '';
 // Первый способ
 // for (let i = 0; i < filmsSort.length; i++) {
@@ -52,6 +53,7 @@ const filmsSort = movieDB.movies.sort();
 //     li.innerHTML = `${i + 1}. ${filmsSort[i]} <div class="delete"></div>`;
 //     listOfFilms.append(li);
 // }
+
 // Второй способ
 // filmsSort.forEach((film ,i) => {
 //     listOfFilms.innerHTML += `
@@ -60,6 +62,7 @@ const filmsSort = movieDB.movies.sort();
 //         </li>
 //     `;
 // });
+
 // Третий способ
 // Не нужно очищать сам список
 itemsOfFilms.forEach((item, i) => {
@@ -72,7 +75,9 @@ itemsOfFilms.forEach((item, i) => {
     item.innerHTML = `${i + 1}. ${filmsSort[i]} <div class="delete"></div>`;
 });
 
-// Node List не работает так -> Type Error
+// Четвертый способ
 // for (let i = 0; i < itemsOfFilms.length; i++) {
-//     itemsOfFilms[i] = filmsSort[i];
+//     // Node List не работает так -> Type Error
+//     // itemsOfFilms[i] = filmsSort[i];
+//     itemsOfFilms[i].innerHTML = `${i + 1}. ${filmsSort[i]} <div class="delete"></div>`;
 // }
