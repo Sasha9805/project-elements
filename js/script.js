@@ -38,7 +38,7 @@ genre.textContent = 'драма';
 // promoBg.style.cssText = `
 //     background: url('img/bg.jpg') center center/100% 100% no-repeat;
 // `;
-promoBg.style.backgroundImage = "url('/img/bg.jpg')";
+promoBg.style.backgroundImage = "url('img/bg.jpg')";
 
 // Четвертое и пятое задание
 const listOfFilms = document.querySelector('.promo__interactive-list');
