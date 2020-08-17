@@ -32,152 +32,186 @@ P.S. Здесь есть несколько вариантов решения з
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const movieDB = {
-        movies: [
-            "Логан",
-            "Лига справедливости",
-            "Ла-ла лэнд",
-            "Одержимость",
-            "Скотт Пилигрим против..."
-        ]
-    };
+	const movieDB = {
+		movies: [
+			"Логан",
+			"Лига справедливости",
+			"Ла-ла лэнд",
+			"Одержимость",
+			"Скотт Пилигрим против..."
+		]
+	};
 
-    const form = document.querySelector('.add'),
-        input = form.querySelector('.adding__input'),
-        inputCheck = form.querySelector('[type="checkbox"]');
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        let inputText = input.value;
-        inputText = (inputText.length > 21) ? inputText.slice(0, 18) + '...' : inputText;
-        
+	const form = document.querySelector('form.add'),
+				input = form.querySelector('.adding__input'),
+				inputCheck = form.querySelector('[type="checkbox"]');
+	form.addEventListener('submit', e => {
+		e.preventDefault();
+		let inputText = input.value;
+		
+		if (inputText) {
+			inputText = inputText[0].toUpperCase() + inputText.slice(1);
+			inputText = (inputText.length > 21) ? inputText.slice(0, 21) + '...' : inputText;
+			movieDB.movies.push(inputText);
 
-        if (inputText) {
-            movieDB.movies.push(inputText);
+			if (inputCheck.checked) {
+				console.log('Добавлен любимый');
+			}
 
-            if (inputCheck.checked) {
-                console.log('Добавлен любимый');
-            }
+			// Мое решение
+			// sortArr(movieDB.movies);
+			// const li = `
+			// 	<li class="promo__interactive-item">${inputText}
+			// 			<div class="delete"></div>
+			// 	</li>
+			// `;
+			// listOfFilms.insertAdjacentHTML('beforeend', li);
+			// itemsOfFilms = listOfFilms.querySelectorAll('.promo__interactive-item');
+			// createMovieList(movieDB.movies, itemsOfFilms);
 
-            filmsSort = sortArr(movieDB.movies);
-            listOfFilms = document.querySelector('.promo__interactive-list');
-            const li = `
-                <li class="promo__interactive-item">${inputText}
-                    <div class="delete"></div>
-                </li>
-            `;
-            listOfFilms.insertAdjacentHTML('beforeend', li);
-            itemsOfFilms = listOfFilms.querySelectorAll('.promo__interactive-item');
-            createMovieList(filmsSort, itemsOfFilms);
+			// С функцией Ивана
+			createMovieList(movieDB.movies, listOfFilms);
+		}
 
-            deleteElem = document.querySelectorAll('.delete');
-            deleteElem.forEach(delItem => {
-                delItem.addEventListener('click', clickDelete);
-            });
-        }
+		// Очистка формы
+		e.target.reset();
+	});
 
-        e.target.reset();
-    });
+	// Первое задание
+	const advertisement = document.querySelectorAll('.promo__adv img');
+	const deleteAdv = arr => {
+		arr.forEach(item => item.remove());
+	};
 
-    // Первое задание
-    const advertisement = document.querySelectorAll('.promo__adv img');
-    const deleteAdv = (arr) => {
-        arr.forEach(item => item.remove());
-    };
-    deleteAdv(advertisement);
+	deleteAdv(advertisement);
 
-    // Второе задание
-    const promoBg = document.querySelector('.promo__bg');
-    // const genre = document.querySelector('.promo__genre');
-    const genre = promoBg.querySelector('.promo__genre');
-    // genre.textContent = 'драма';
+	// Второе задание
+	const promoBg = document.querySelector('.promo__bg');
+	// const genre = document.querySelector('.promo__genre');
+	const genre = promoBg.querySelector('.promo__genre');
 
-    // Третье задание
-    // promoBg.style.cssText = `
-    //     background: url('img/bg.jpg') center center/100% 100% no-repeat;
-    // `;
-    // promoBg.style.backgroundImage = "url('img/bg.jpg')";
-    
-    const makeChanges = () => {
-        genre.textContent = 'драма';
-        promoBg.style.backgroundImage = "url('img/bg.jpg')";
-    };
-    makeChanges();
+	// Третье задание
+	// promoBg.style.cssText = `
+	//     background: url('img/bg.jpg') center center/100% 100% no-repeat;
+	// `;
+	
+	const makeChanges = () => {
+		genre.textContent = 'драма';
+		promoBg.style.backgroundImage = "url('img/bg.jpg')";
+	};
 
-    // Четвертое и пятое задание
-    let listOfFilms = document.querySelector('.promo__interactive-list');
-    let itemsOfFilms = listOfFilms.querySelectorAll('.promo__interactive-item');
-    const sortArr = (arr) => {
-        return arr.sort();
-    };
-    let filmsSort = sortArr(movieDB.movies);
+	makeChanges();
 
-    // listOfFilms.innerHTML = '';
-    // Первый способ
-    // for (let i = 0; i < filmsSort.length; i++) {
-    //     const li = document.createElement('li');
-    //     li.classList.add('promo__interactive-item');
-    //     li.innerHTML = `${i + 1}. ${filmsSort[i]} <div class="delete"></div>`;
-    //     listOfFilms.append(li);
-    // }
+	// Четвертое и пятое задание
+	let listOfFilms = document.querySelector('.promo__interactive-list');
+	let itemsOfFilms = listOfFilms.querySelectorAll('.promo__interactive-item');
+	
+	const sortArr = (arr) => {
+		return arr.sort();
+	};
+	
+	// sortArr(movieDB.movies);
 
-    // Второй способ
-    // filmsSort.forEach((film ,i) => {
-    //     listOfFilms.innerHTML += `
-    //         <li class="promo__interactive-item">${i + 1}. ${film}
-    //             <div class="delete"></div>
-    //         </li>
-    //     `;
-    // });
+	// let filmsSort = sortArr(movieDB.movies);
 
-    // Третий способ
-    // Не нужно очищать сам список
-    // itemsOfFilms.forEach((item, i) => {
-    //     // Выведет так этот текст, нужно заранее создать эл-т
-    //     // item.prepend(`<span>${i}</span>`);
+	// listOfFilms.innerHTML = '';
+	// Первый способ
+	// for (let i = 0; i < filmsSort.length; i++) {
+	//     const li = document.createElement('li');
+	//     li.classList.add('promo__interactive-item');
+	//     li.innerHTML = `${i + 1}. ${filmsSort[i]} <div class="delete"></div>`;
+	//     listOfFilms.append(li);
+	// }
 
-    //     // item.innerHTML = `${filmsSort[i]}`;
-    //     // item.insertAdjacentHTML('afterbegin', `${i}. `);
+	// Второй способ
+	// filmsSort.forEach((film ,i) => {
+	//     listOfFilms.innerHTML += `
+	//         <li class="promo__interactive-item">${i + 1}. ${film}
+	//             <div class="delete"></div>
+	//         </li>
+	//     `;
+	// });
 
-    //     item.innerHTML = `${i + 1}. ${filmsSort[i]} <div class="delete"></div>`;
-    // });
+	// Третий способ
+	// Не нужно очищать сам список
+	// itemsOfFilms.forEach((item, i) => {
+	//     // Выведет так этот текст, нужно заранее создать эл-т
+	//     // item.prepend(`<span>${i}</span>`);
 
-    function createMovieList(films, parent) {
-        parent.forEach((item, i) => {
-            item.innerHTML = `${i + 1}. ${films[i]} <div class="delete"></div>`;
-        });
-    }
+	//     // item.innerHTML = `${filmsSort[i]}`;
+	//     // item.insertAdjacentHTML('afterbegin', `${i}. `);
 
-    createMovieList(filmsSort, itemsOfFilms);
+	//     item.innerHTML = `${i + 1}. ${filmsSort[i]} <div class="delete"></div>`;
+	// });
 
-    // Четвертый способ
-    // for (let i = 0; i < itemsOfFilms.length; i++) {
-    //     // Node List не работает так -> Type Error
-    //     // itemsOfFilms[i] = filmsSort[i];
-    //     itemsOfFilms[i].innerHTML = `${i + 1}. ${filmsSort[i]} <div class="delete"></div>`;
-    // }
+	// function createMovieList(films, parent) {
+	// 	parent.forEach((item, i) => {
+	// 		item.innerHTML = `${i + 1}. ${films[i]} <div class="delete"></div>`;
+	// 	});
+	// 	// Вешаем события на корзинки
+	// 	addEventDelete(document.querySelectorAll('.delete'));
+	// }
 
-    let deleteElem = document.querySelectorAll('.delete');
-    function clickDelete(e) {
-        let parentElem = e.target.parentElement;
-        parentElem.remove();
-        rewriteList(parentElem, movieDB.movies, listOfFilms);
-    }
-    function rewriteList(elem, films, listItems) {
-        listItems = document.querySelectorAll('.promo__interactive-item');
-        for (let i = 0; i < films.length; i++) {
-            if (elem.firstChild.data.toLowerCase().includes(films[i].toLowerCase())) {
-                films.splice(i, 1);
-                break;
-            }
-        }
-        films = sortArr(films);
-        listItems.forEach((item, i) => {
-            item.firstChild.data = `${i + 1}. ${films[i]}`;
-            // item.innerHTML = `${i + 1}. ${films[i]} <div class="delete"></div>`;
-        });
-    }
+	// Версия Ивана
+	// Он работает со списком фильмов, а не с элементами списка
+	// Исп. второй способ добавления (см. выше)
+	function createMovieList(films, parent) {
+		parent.innerHTML = '';
+		// Тогда не нужно в осн. потоке ее вызывать
+		sortArr(films);
+		films.forEach((film, i) => {
+			parent.innerHTML += `
+				<li class="promo__interactive-item">${i + 1}. ${film}
+						<div class="delete"></div>
+				</li>
+	    `;
+		});
 
-    deleteElem.forEach(delItem => {
-        delItem.addEventListener('click', clickDelete);
-    });
+		// Получение корзинок
+		document.querySelectorAll('.delete').forEach( (btn, i) => {
+			btn.addEventListener('click', () => {
+				btn.parentElement.remove();
+				movieDB.movies.splice(i, 1);
+
+				// Рекурсия!
+				createMovieList(films, parent);
+			});
+		});
+	}
+
+	// createMovieList(movieDB.movies, itemsOfFilms);
+	// Функция Ивана
+	createMovieList(movieDB.movies, listOfFilms);
+
+	// Четвертый способ
+	// for (let i = 0; i < itemsOfFilms.length; i++) {
+	//     // Node List не работает так -> Type Error
+	//     // itemsOfFilms[i] = filmsSort[i];
+	//     itemsOfFilms[i].innerHTML = `${i + 1}. ${filmsSort[i]} <div class="delete"></div>`;
+	// }
+
+	// Мое решение с корзинками
+	// function clickDelete(e) {
+	// 	let parentElem = e.target.parentElement;
+	// 	parentElem.remove();
+	// 	rewriteList(parentElem, movieDB.movies, itemsOfFilms);
+	// }
+	// function rewriteList(elem, films, listItems) {
+	// 	listItems = document.querySelectorAll('.promo__interactive-item');
+	// 	for (let i = 0; i < films.length; i++) {
+	// 		if (elem.firstChild.data.toLowerCase().includes(films[i].toLowerCase())) {
+	// 			films.splice(i, 1);
+	// 			break;
+	// 		}
+	// 	}
+	// 	sortArr(films);
+	// 	listItems.forEach((item, i) => {
+	// 		item.firstChild.data = `${i + 1}. ${films[i]}`;
+	// 	});
+	// }
+	// function addEventDelete(nodeList) {
+	// 	nodeList.forEach(delItem => {
+	// 		delItem.addEventListener('click', clickDelete);
+	// 	});
+	// }
 });
